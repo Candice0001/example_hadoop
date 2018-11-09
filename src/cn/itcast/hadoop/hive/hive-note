@@ -1,0 +1,105 @@
+数据仓库 & 传统数据库：
+数据仓库：（1）是一种特殊的数据库，擅长大数据量查询分析，数据加工，存储。
+	        （2） 保存历史数据的所有状态
+	        （3）提取加工数据进行反哺业务，提供分析决策；
+	        （4） 强调数据分析的效率，复杂查询的速度，数据之间的相关性分析，喜欢使用多维模型，从而提高数据分析的效率
+	        （5）包含汇总数据
+传统数据库:（1）擅长事务处理，增删改查；
+		（2）保存当下数据
+		（3）会出现频繁数据更新
+		（4）遵循范式模型，减少数据冗余，保证数据完整性
+		（5）一般是明细数据
+
+Hive 是基于Hadoop的数据仓库工具，可以将结构化的数据文件（存储在HDFS上）映射为一张数据库表，并提供SQL查询功能；
+本质是将SQL转换为MapReduce程序；
+主要用途：做离线数据分析，比直接使用Mr开发效率高；
+
+Hive组件：
+1.用户接口
+2.元数据存储：通常存储在关系型数据库中
+3.解释器、编译器、优化器、执行器
+
+Hive利用Hdfs存储数据，利用MapReduce查询数据
+
+Hive（数据仓库） & 传统数据库  区别：
+	hive用于海量数据的离线数据分析；hive只适合用来做批量数据统计分析；
+	
+	
+			Hive    		RDBMS
+查询语言		HQL				SQL
+数据存储		HDFS			Raw Device or local FS （本地存储）
+执行			MapReduce		Excutor
+执行延迟		高				低
+处理数据规模	大，分布式的		小
+索引			0.8版本后加入位图索引		有复杂的索引
+
+
+hive的几种交互方式
+1.hive交互shell	bin/hive 
+	进入到hive的shell界面
+	
+2.Hive JDBC服务
+3.hive启动为一个服务，
+	bin/hiveserver2
+	
+	启动成功，可以使用beeline
+	bin/beeline -u jdbc:hive2://mini1:10000
+	
+4.hive命令 
+	hive -e 'sql'which cd 
+	bin/hive -e 'select * from t_test'
+	
+执行完成命令后，退出了hive的控制台
+
+
+映射：
+1. hive 建立一张表，和已经存在的结构化的数据文件产生映射关系；
+	映射成功后，就可以通过写sql来分析结构化数据，避免了写mr程序
+
+2. 数据库     /user/hive/warehouse 下的一个文件夹对应
+表	数据库文件夹下的子文件夹 	/user/hive/warehouse/itcast.db/t_t1
+表的位置不能随便放，一定要在指定的数据库表的文件夹下面
+建立表的时候 可能还需要指定分割符 否则有可能映射不成功
+
+
+默认分割符，在vi中 ctl+V 和 ctl+A 
+
+解析如下数据：
+1.
+zs|beijing,shanghai,tianjing
+wu|shanghai,hk,shenzhen,guangzhou
+
+建表语句：
+create table t_t2(name string,workspace array<string>) 
+row format delimited fields terminated by '|' 
+collection items terminated by ',';
+
+2.
+Map数据如下：
+zs|fruit:apple-color:red-person:mother
+wu|fruit:banana-color:blue-person:grandmonther
+
+建表语句：
+ create table t_t3(name string,comment_map map<string,string>) 
+ row format delimited fields terminated by '|' 
+ collection items terminated by '-' 
+ map keys terminated by ':';
+ 
+分区表
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

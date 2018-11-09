@@ -1,0 +1,14 @@
+#!/bin/sh
+
+# techbbs_core.sh
+
+#step1.get yesterday format string
+yesterday=$(date --date='1 days ago' +%Y_%m_%d)
+#step2.upload logs to hdfs
+hadoop fs -put /usr/local/files/apache_logs/access_${yesterday}.log /project/techbbs/data
+#step3.clean log data
+hadoop jar /usr/local/files/apache_logs/mycleaner.jar /project/techbbs/data/access_${yesterday}.log /project/techbbs/cleaned/${yesterday}
+
+
+# 结合crontab设置为每天1点钟自动执行的定期任务：crontab -e，内容如下（其中1代表每天1:00，techbbs_core.sh为要执行的脚本文件）：
+* 1 * * * techbbs_core.sh

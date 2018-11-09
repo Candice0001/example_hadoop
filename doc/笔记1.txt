@@ -1,0 +1,11 @@
+1. hadoop 简介：
+		hadoop就是一个实现了goole云计算系统的开源系统，包括并行计算模型map/Reduce,分布式文件系统HDFS，分布式数据库Hbase,
+	同时hadoop的相关项目也很丰富。
+
+1.1 Map/Reduce
+	（1）mapReduce是hadoop的核心组件之一，hadoop分布式包括两个部分，一个是分布式文件系统，另一个是分布式计算框架，就是mapreduce，
+	缺一不可，也就是说：可以通过mapreduce很容易的在hadoop平台上进行分布式的计算编程；
+	（2）MapReduce是一种编程模型，也是一种编程方法，抽象理论
+	（3）
+	
+	
